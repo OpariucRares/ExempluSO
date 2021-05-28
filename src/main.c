@@ -34,8 +34,10 @@ int main(){
 
     if( fork() == 0 )
         execl("bin/worker1", "bin/worker1", NULL );
+        //execl("./worker1", "worker1", NULL ); - ca sa il execute
     if( fork() == 0 )
         execl("bin/worker2", "bin/worker2", NULL );
+        //execl("./worker2", "worker2", NULL ); - ca sa il execute
 
     //Deschidem fifo-ul pentru a scrie in el 
     int fd_fifo = open( "MyFifo", O_WRONLY );
@@ -79,6 +81,7 @@ int main(){
     close(fd_fifo);
     int ret;
     while( wait(&ret) > 0 ); 
+    //ca sa stergem cele doua canale FIFO (sa nu ramana in sistem)
     unlink("MyFifo");
     unlink("MyOtherFifo");
 }
