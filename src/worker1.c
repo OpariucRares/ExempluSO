@@ -14,7 +14,7 @@
 
 /*
  * Worker 1
- *
+ * Ia din canalul MyFifo creat anterior si pune intr-un nou canal (MyOtherFifo) ccu textul corectat (Litera mare dupa un semnele de punctuatie aferente)
  * */
 
 
@@ -49,7 +49,7 @@ int main()
             else if ( buf[i] != ' ' )
                 seen_punct = false;
 
-
+            //scrie in noul canal fifo textul corectat
             write(fd_fifo, (buf + i), sizeof(char));                
         }
 
