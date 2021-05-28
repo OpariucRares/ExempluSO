@@ -32,15 +32,15 @@ int main(){
     //Pregatim fifo-ul pe care il vom folosi sa transmitem datale catre procesul fiu 1
     mkfifo("MyFifo", 0600 );
 
-
     if( fork() == 0 )
-    {
-        execl("bin/worker1", "worker1", NULL );
-    }
-
+        execl("bin/worker1", "bin/worker1", NULL );
+    if( fork() == 0 )
+        execl("bin/worker2", "bin/worker2", NULL );
 
     //Deschidem fifo-ul pentru a scrie in el 
     int fd_fifo = open( "MyFifo", O_WRONLY );
+    if( fd_fifo == -1 )
+        perror("P: open myfifo");
     //Citim intr-un while in caz ca exista mai mult tex tin fisier decat avem spatiu in buffer
     
     int seen_space = 0;
@@ -70,6 +70,7 @@ int main(){
                 write(fd_fifo, (buf + i), sizeof(char) );
                 seen_space = true;
             }
+
 
         }
 

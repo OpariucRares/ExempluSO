@@ -1,19 +1,12 @@
-CC=gcc
-BIN=detoate
-SRCDIR=src
-BINDIR=bin
-OBJDIR=bin_int
-OBJS=$(OBJDIR)/main.o
-CLFAGS=-Wall -Wextra -Wpedantic -g
+
+all:
+	gcc src/main.c -o bin/main -Wall -Wextra -Wpedantic
+	gcc src/worker1.c -o bin/worker1 -Wall -Wextra -Wpedantic
+	gcc src/worker2.c -o bin/worker2 -Wall -Wextra -Wpedantic
 
 
-all:$(BINDIR)/$(BIN)
-
-$(BINDIR)/$(BIN): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(BINDIR)/* $(OBJDIR)/*
+	rm MyFifo
+	rm MyOtherFifo
+	rm -rf bin/*
